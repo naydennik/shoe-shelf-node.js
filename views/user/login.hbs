@@ -1,0 +1,17 @@
+<h1>Login</h1>
+<p class="form-info">Don't have account?
+  <a href="/users/register">Register now</a> and fix that!
+</p>
+<form action="/users/login" method="POST">
+  <div>
+    <input type="email" name="email" placeholder="Email..." value={{email}}>
+  </div>
+
+  <div>
+    <input type="password" name="password" placeholder="Password..." value={{password}}>
+  </div>
+  <div>
+    <p class="message"></p>
+    <button>Login</button>
+  </div>
+</form>
