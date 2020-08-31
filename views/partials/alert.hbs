@@ -1,0 +1,14 @@
+{{#if errors}}
+<div class="alert">
+    <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+    {{#each errors}}
+    <strong>{{this}}</strong>
+    {{/each}}
+</div>
+{{/if}}
+{{#if success}}
+<div class="success">
+    <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+    <strong>{{success}}</strong>
+</div>
+{{/if}}

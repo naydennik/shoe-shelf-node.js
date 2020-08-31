@@ -35,7 +35,6 @@ module.exports = {
               password,
               errors: ["Wrong password or email!"],
             });
-            console.log("Wrong password or email!");
             return;
           }
           const token = utils.jwt.createToken({ id: user._id });
@@ -50,18 +49,28 @@ module.exports = {
       const { email, name, password, repeatPassword } = req.body;
       const errors = validationResult(req);
 
+      if (!errors.isEmpty()) {
+        result = Promise.reject({
+          name: "ValidationError",
+          errors: errors.errors,
+        });
+      }
+
       if (password !== repeatPassword) {
         res.render("user/register.hbs", {
           email,
           name,
           password,
           repeatPassword,
+          errors: ["Password don't match the repeat password!"],
         });
         return console.log("Password don't match the repeat password!");
       } else {
         models.User.create({ email, name, password })
           .then(() => {
-            res.redirect("/users/login");
+            res.render("user/login.hbs", {
+              success: "Successfully registered! Please Log In",
+            });
           })
           .catch((err) => {
             if (err.name === "MongoError") {
@@ -70,16 +79,18 @@ module.exports = {
                 name,
                 password,
                 repeatPassword,
+                errors: ["User already exists!"],
               });
               return console.log("User already exists!");
             } else if (err.name === "ValidationError") {
               res.render("user/register.hbs", {
                 errors: Object.entries(err.errors).map((tuple) => {
-                  console.log(tuple[1].message);
+                  return tuple[1].message;
                 }),
               });
               return;
             }
+            next(err);
           });
       }
     },

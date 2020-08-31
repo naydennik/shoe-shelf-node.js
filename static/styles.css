@@ -17,6 +17,13 @@
   text-align: center;
 }
 
+.success {
+  padding: 20px;
+  background-color: rgb(132, 235, 132);
+  color: white;
+  text-align: center;
+}
+
 .closebtn {
   margin-left: 15px;
   color: white;
