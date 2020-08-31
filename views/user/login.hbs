@@ -1,3 +1,14 @@
+{{#if errors}}
+<div class="alert">
+  {{#each errors}}
+  <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+  <strong>{{this}}</strong>
+  {{/each}}
+</div>
+{{/if}}
+
+
+
 <h1>Login</h1>
 <p class="form-info">Don't have account?
   <a href="/users/register">Register now</a> and fix that!

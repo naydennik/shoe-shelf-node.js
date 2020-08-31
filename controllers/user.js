@@ -33,6 +33,7 @@ module.exports = {
             res.render("user/login.hbs", {
               email,
               password,
+              errors: ["Wrong password or email!"],
             });
             console.log("Wrong password or email!");
             return;
