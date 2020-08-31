@@ -64,7 +64,7 @@ module.exports = {
           repeatPassword,
           errors: ["Password don't match the repeat password!"],
         });
-        return console.log("Password don't match the repeat password!");
+        return;
       } else {
         models.User.create({ email, name, password })
           .then(() => {
@@ -81,7 +81,7 @@ module.exports = {
                 repeatPassword,
                 errors: ["User already exists!"],
               });
-              return console.log("User already exists!");
+              return;
             } else if (err.name === "ValidationError") {
               res.render("user/register.hbs", {
                 errors: Object.entries(err.errors).map((tuple) => {

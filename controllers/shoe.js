@@ -62,7 +62,7 @@ module.exports = {
           name: "ValidationError",
           errors: errors.errors,
         });
-        return console.log(errors);
+        return;
       }
 
       models.Shoe.create({
@@ -84,8 +84,8 @@ module.exports = {
               imageUrl,
               description,
               brand,
+              errors: ["Name already exists!"],
             });
-            console.log("Name already exists!");
             return;
           } else if (err.name === "ValidationError") {
             res.render("shoe/create.hbs", {
@@ -95,7 +95,7 @@ module.exports = {
               description,
               brand,
               errors: Object.entries(err.errors).map((tuple) => {
-                return console.log(tuple[1].message);
+                return tuple[1].message;
               }),
             });
             return;
@@ -114,7 +114,7 @@ module.exports = {
           name: "ValidationError",
           errors: errors.errors,
         });
-        return console.log(errors);
+        return;
       }
 
       models.Shoe.findByIdAndUpdate(
@@ -132,8 +132,8 @@ module.exports = {
               imageUrl,
               description,
               brand,
+              errors: ["Title already exists!"],
             });
-            console.log("Title already exists!");
             return;
           } else if (err.name === "ValidationError") {
             res.render("course/create.hbs", {
@@ -143,7 +143,7 @@ module.exports = {
               description,
               brand,
               errors: Object.entries(err.errors).map((tuple) => {
-                return console.log(tuple[1].message);
+                return tuple[1].message;
               }),
             });
             return;
