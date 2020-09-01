@@ -1,5 +1,6 @@
 const models = require("../models");
 const { validationResult } = require("express-validator");
+const shoe = require("../models/shoe");
 
 module.exports = {
   get: {
@@ -119,29 +120,37 @@ module.exports = {
 
       models.Shoe.findByIdAndUpdate(
         { _id: id },
-        { name, price, imageUrl, description, brand }
+        { name, price, imageUrl, description, brand },
+        { runValidators: true }
       )
         .then(() => {
           res.redirect(`/shoes/details/${id}`);
         })
         .catch((err) => {
           if (err.name === "MongoError") {
-            res.render("course/create.hbs", {
-              name,
-              price,
-              imageUrl,
-              description,
-              brand,
-              errors: ["Title already exists!"],
+            let shoe = {};
+            shoe._id = id;
+            shoe.name = name;
+            shoe.price = price;
+            shoe.imageUrl = imageUrl;
+            shoe.description = description;
+            shoe.brand = brand;
+
+            res.render("shoe/edit.hbs", {
+              shoe,
+              errors: ["Name already exists! Please add a different one."],
             });
             return;
           } else if (err.name === "ValidationError") {
-            res.render("course/create.hbs", {
-              name,
-              price,
-              imageUrl,
-              description,
-              brand,
+            let shoe = {};
+            shoe._id = id;
+            shoe.name = name;
+            shoe.price = price;
+            shoe.imageUrl = imageUrl;
+            shoe.description = description;
+            shoe.brand = brand;
+            res.render("shoe/edit.hbs", {
+              shoe,
               errors: Object.entries(err.errors).map((tuple) => {
                 return tuple[1].message;
               }),
