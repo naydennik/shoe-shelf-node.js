@@ -247,7 +247,8 @@ main .about-us div {
 }
 
 main .about-us div img {
-  width: 200px;
+  width: 100px;
+  height: 700px;
   border-radius: 15px;
   flex: 1;
   vertical-align: top;
@@ -259,7 +260,7 @@ main .about-us h1 {
 }
 
 main .about-us p {
-  padding: 2%;
+  padding: 1%;
   font-size: 18px;
 }
 
