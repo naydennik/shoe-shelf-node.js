@@ -54,7 +54,7 @@ module.exports = {
   },
   post: {
     create: function (req, res, next) {
-      const { name, price, imageUrl, description, brand } = req.body;
+      const { title, price, imageUrl, description, brand } = req.body;
       const authorId = req.user._id;
       const errors = validationResult(req);
 
@@ -67,7 +67,7 @@ module.exports = {
       }
 
       models.Shoe.create({
-        name,
+        title,
         price,
         imageUrl,
         description,
@@ -80,17 +80,17 @@ module.exports = {
         .catch((err) => {
           if (err.name === "MongoError") {
             res.render("shoe/create.hbs", {
-              name,
+              title,
               price,
               imageUrl,
               description,
               brand,
-              errors: ["Name already exists!"],
+              errors: ["Title already exists!"],
             });
             return;
           } else if (err.name === "ValidationError") {
             res.render("shoe/create.hbs", {
-              name,
+              title,
               price,
               imageUrl,
               description,
@@ -106,7 +106,7 @@ module.exports = {
     },
 
     edit: function (req, res, next) {
-      const { name, price, imageUrl, description, brand } = req.body;
+      const { title, price, imageUrl, description, brand } = req.body;
       const id = req.params.id;
       const errors = validationResult(req);
 
@@ -120,7 +120,7 @@ module.exports = {
 
       models.Shoe.findByIdAndUpdate(
         { _id: id },
-        { name, price, imageUrl, description, brand },
+        { title, price, imageUrl, description, brand },
         { runValidators: true }
       )
         .then(() => {
@@ -130,7 +130,7 @@ module.exports = {
           if (err.name === "MongoError") {
             let shoe = {};
             shoe._id = id;
-            shoe.name = name;
+            shoe.title = title;
             shoe.price = price;
             shoe.imageUrl = imageUrl;
             shoe.description = description;
@@ -138,13 +138,13 @@ module.exports = {
 
             res.render("shoe/edit.hbs", {
               shoe,
-              errors: ["Name already exists! Please add a different one."],
+              errors: ["Title already exists! Please add a different one."],
             });
             return;
           } else if (err.name === "ValidationError") {
             let shoe = {};
             shoe._id = id;
-            shoe.name = name;
+            shoe.title = title;
             shoe.price = price;
             shoe.imageUrl = imageUrl;
             shoe.description = description;

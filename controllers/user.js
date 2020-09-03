@@ -11,6 +11,21 @@ module.exports = {
     register: function (req, res) {
       res.render("user/register.hbs");
     },
+    profile: function (req, res) {
+      const email = req.cookies["email"];
+
+      models.User.findOne({ email })
+        .populate("offersBought")
+        .exec(function (err, user) {
+          if (err) {
+            console.log(err);
+          }
+          const sumPrices = user.offersBought.reduce(function (acc, curr) {
+            return acc + curr.price;
+          }, 0);
+          res.render("user/profile.hbs", { sumPrices, user: user.toJSON() });
+        });
+    },
     logout: function (req, res) {
       const token = req.cookies[appConfig.authCookieName];
       models.tokenBlacklistModel.create({ token }).then(() => {
@@ -24,7 +39,7 @@ module.exports = {
   },
   post: {
     login: function (req, res, next) {
-      const { email, name, password } = req.body;
+      const { email, password } = req.body;
       models.User.findOne({ email })
         .then((user) =>
           Promise.all([user, user ? user.matchPassword(password) : false])

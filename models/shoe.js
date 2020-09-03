@@ -1,10 +1,10 @@
 const mongoose = require("mongoose");
 
 const shoeSchema = new mongoose.Schema({
-  name: {
+  title: {
     type: String,
-    required: [true, "Name is required!"],
-    unique: [true, "Name already taken!"],
+    required: [true, "Title is required!"],
+    unique: [true, "Title already taken!"],
   },
   price: {
     type: Number,
