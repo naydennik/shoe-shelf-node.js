@@ -18,6 +18,7 @@ module.exports = (app) => {
   app.use((req, res, next) => {
     res.locals.isLogged = req.cookies["auth_cookie"] !== undefined;
     res.locals.email = req.cookies["email"];
+    res.locals.name = req.cookies["name"];
     next();
   });
   app.set("views", path.resolve(__basedir, "views"));

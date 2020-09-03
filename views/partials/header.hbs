@@ -11,7 +11,11 @@
                     <img src="/sneakers.png" alt="">
                 </a>
             </li>
-            <li>Welcome, {{email}} |
+            {{#if name}}
+            <li>Welcome, {{name}}
+                {{else}}
+            <li>Welcome, {{email}}
+                {{/if}}
                 <a href="/users/logout">Logout</a>
             </li>
         </ul>

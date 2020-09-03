@@ -12,6 +12,8 @@
 
 .alert {
   padding: 20px;
+  width: 50%;
+  margin: auto;
   background-color: #f44336;
   color: white;
   text-align: center;
@@ -19,6 +21,8 @@
 
 .success {
   padding: 20px;
+  width: 50%;
+  margin: auto;
   background-color: rgb(132, 235, 132);
   color: white;
   text-align: center;

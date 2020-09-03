@@ -17,13 +17,14 @@ module.exports = {
         res
           .clearCookie(appConfig.authCookieName)
           .clearCookie("email")
+          .clearCookie("name")
           .redirect("/users/login");
       });
     },
   },
   post: {
     login: function (req, res, next) {
-      const { email, password } = req.body;
+      const { email, name, password } = req.body;
       models.User.findOne({ email })
         .then((user) =>
           Promise.all([user, user ? user.matchPassword(password) : false])
@@ -42,6 +43,7 @@ module.exports = {
           res
             .cookie(appConfig.authCookieName, token)
             .cookie("email", user.email)
+            .cookie("name", user.name)
             .redirect("/");
         });
     },
@@ -84,6 +86,10 @@ module.exports = {
               return;
             } else if (err.name === "ValidationError") {
               res.render("user/register.hbs", {
+                email,
+                name,
+                password,
+                repeatPassword,
                 errors: Object.entries(err.errors).map((tuple) => {
                   return tuple[1].message;
                 }),
